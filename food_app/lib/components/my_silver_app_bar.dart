@@ -28,7 +28,7 @@ class MySilverAppBar extends StatelessWidget {
       title: Text("Food App"),
       flexibleSpace: FlexibleSpaceBar(
         background: Padding(
-          padding: const EdgeInsets.only(bottom: 50),
+          padding: const EdgeInsets.only(bottom: 50.0),
           child: child,
         ),
         title: title,

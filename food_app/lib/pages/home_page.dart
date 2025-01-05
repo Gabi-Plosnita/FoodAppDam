@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/components/my_current_location.dart';
+import 'package:food_app/components/my_description_box.dart';
 import 'package:food_app/components/my_drawer.dart';
 import 'package:food_app/components/my_silver_app_bar.dart';
 import 'package:food_app/main.dart';
@@ -28,7 +29,9 @@ class _HomePageState extends State<HomePage> {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
 
-                MyCurrentLocation(),
+                const MyCurrentLocation(),
+
+                const MyDescriptionBox(),
               ],
             ), 
             title: Text("title")
