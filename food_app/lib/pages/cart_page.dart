@@ -14,9 +14,35 @@ class CartPage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("Cart"),
+            title: const Text("Cart"),
             backgroundColor: Colors.transparent,
             foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text("Are you sure you want to clear your cart?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Canel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            restaurant.clearCart();
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Yes"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.delete),
+              ),
+            ],
           ),
           body: Column(
             children: [
