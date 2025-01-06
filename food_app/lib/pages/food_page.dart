@@ -4,11 +4,16 @@ import 'package:food_app/models/food.dart';
 
 class FoodPage extends StatefulWidget {
   final Food food;
+  final Map<Addon, bool> selectedAddons = {};
 
-  const FoodPage({
+  FoodPage({
     super.key,
     required this.food,
-  });
+  }) {
+    for(Addon addon in food.availableAddons) {
+      selectedAddons[addon] = false;
+    }
+  }
 
   @override
   State<FoodPage> createState() => _FoodPageState();
@@ -80,7 +85,7 @@ class _FoodPageState extends State<FoodPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          value: false,
+                          value: widget.selectedAddons[addon],
                           onChanged: (value) {},
                         );
                       },
