@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/components/my_current_location.dart';
 import 'package:food_app/components/my_description_box.dart';
 import 'package:food_app/components/my_drawer.dart';
+import 'package:food_app/components/my_food_tile.dart';
 import 'package:food_app/components/my_silver_app_bar.dart';
 import 'package:food_app/components/my_tab_bar.dart';
 import 'package:food_app/models/food.dart';
@@ -37,12 +38,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   List<Widget> getFoodInThisCategory(List<Food> fullMenu){
     return FoodCategory.values.map((category) {
       List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
+      
       return ListView.builder(
         itemCount: categoryMenu.length,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(categoryMenu[index].name),
-          );
+          final food = categoryMenu[index];
+          return FoodTile(food: food, onTap: () {});
         },
       );
     }).toList();
