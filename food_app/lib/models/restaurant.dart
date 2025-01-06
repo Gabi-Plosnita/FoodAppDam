@@ -1,4 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/models/cart_item.dart';
 import 'package:food_app/models/food.dart';
 
 class Restaurant extends ChangeNotifier {
@@ -15,7 +17,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Avocado", price: 1.99),
           Addon(name: "Onion rings", price: 1.49),
         ]),
-
     Food(
         name: "Veggie Burger",
         description:
@@ -28,7 +29,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Grilled mushrooms", price: 1.49),
           Addon(name: "Cheese", price: 0.99),
         ]),
-
     Food(
         name: "BBQ Burger",
         description:
@@ -41,7 +41,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Jalapeños", price: 1.25),
           Addon(name: "Coleslaw", price: 1.00),
         ]),
-
     Food(
         name: "Double Cheeseburger",
         description:
@@ -54,7 +53,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Bacon", price: 1.99),
           Addon(name: "Pickles", price: 0.75),
         ]),
-
     Food(
         name: "Pepperoni Pizza",
         description:
@@ -67,7 +65,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Black olives", price: 1.25),
           Addon(name: "Extra cheese", price: 1.50),
         ]),
-
     Food(
         name: "Quattro Stagioni Pizza",
         description:
@@ -80,7 +77,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Extra ham", price: 1.75),
           Addon(name: "Basil leaves", price: 0.75),
         ]),
-
     Food(
         name: "Quattro Formaggi Pizza",
         description:
@@ -93,7 +89,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Truffle oil", price: 2.00),
           Addon(name: "Fresh arugula", price: 1.25),
         ]),
-
     Food(
         name: "Prosciutto Pizza",
         description:
@@ -106,7 +101,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Parmesan flakes", price: 1.25),
           Addon(name: "Cherry tomatoes", price: 1.00),
         ]),
-
     Food(
         name: "Cola",
         description: "Refreshing cola drink served chilled.",
@@ -118,7 +112,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Lemon slice", price: 0.25),
           Addon(name: "Large size", price: 1.00),
         ]),
-
     Food(
         name: "Fanta",
         description: "Sweet and fizzy orange-flavored soda.",
@@ -130,7 +123,6 @@ class Restaurant extends ChangeNotifier {
           Addon(name: "Orange slice", price: 0.25),
           Addon(name: "Large size", price: 1.00),
         ]),
-
     Food(
         name: "Sprite",
         description: "Crisp lemon-lime soda with a refreshing taste.",
@@ -146,4 +138,71 @@ class Restaurant extends ChangeNotifier {
 
   List<Food> get menu => _menu;
 
+  final List<CartItem> _cart = [];
+
+  void addToCart(Food food, List<Addon> selectedAddons) {
+    CartItem? cartItem = _cart.firstWhereOrNull((item) {
+      bool isSameFood = item.food == food;
+
+      bool isSameAddons =
+          ListEquality().equals(item.selectedAddons, selectedAddons);
+
+      return isSameFood && isSameAddons;
+    });
+
+    if (cartItem != null) {
+      cartItem.quantity++;
+    } else {
+      _cart.add(
+        CartItem(food: food, selectedAddons: selectedAddons),
+      );
+    }
+
+    notifyListeners();
+  }
+
+  void removeFromCart(CartItem cartItem) {
+    int cartIndex = _cart.indexOf(cartItem);
+
+    if (cartIndex != -1) {
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
+      } else {
+        _cart.removeAt(cartIndex);
+      }
+    }
+
+    notifyListeners();
+  }
+
+  double getTotalPrice() {
+    double total = 0;
+
+    for (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+
+      for (Addon addon in cartItem.selectedAddons) {
+        total += addon.price;
+      }
+
+      total += itemTotal * cartItem.quantity;
+    }
+
+    return total;
+  }
+
+  int getTotalItemCount(){
+    int totalItemCount = 0;
+
+    for(CartItem cartItem in _cart){
+      totalItemCount += cartItem.quantity;
+    }
+
+    return totalItemCount;
+  }
+
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
 }
