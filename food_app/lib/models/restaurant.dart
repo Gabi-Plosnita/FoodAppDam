@@ -59,7 +59,7 @@ class Restaurant extends ChangeNotifier {
         name: "Pepperoni Pizza",
         description:
             "Classic pizza topped with spicy pepperoni and mozzarella cheese.",
-        imagePath: "lib/images/pizzas/pepperoni.png",
+        imagePath: "lib/images/pizza/pepperoni.png",
         price: 10.49,
         category: FoodCategory.pizza,
         availableAddons: [
@@ -72,7 +72,7 @@ class Restaurant extends ChangeNotifier {
         name: "Quattro Stagioni Pizza",
         description:
             "Four seasons pizza with mushrooms, ham, artichokes, and olives, divided into four sections.",
-        imagePath: "lib/images/pizzas/quattro_stagioni.jpg",
+        imagePath: "lib/images/pizza/quattro_stagioni.jpg",
         price: 12.49,
         category: FoodCategory.pizza,
         availableAddons: [
@@ -85,7 +85,7 @@ class Restaurant extends ChangeNotifier {
         name: "Quattro Formaggi Pizza",
         description:
             "A blend of four cheeses: mozzarella, gorgonzola, parmesan, and ricotta.",
-        imagePath: "lib/images/pizzas/quattro_formaggi.jpg",
+        imagePath: "lib/images/pizza/quattro_formaggi.jpg",
         price: 11.99,
         category: FoodCategory.pizza,
         availableAddons: [
@@ -98,7 +98,7 @@ class Restaurant extends ChangeNotifier {
         name: "Prosciutto Pizza",
         description:
             "Pizza topped with thinly sliced prosciutto, fresh mozzarella, and arugula.",
-        imagePath: "lib/images/pizzas/prosciutto.jpg",
+        imagePath: "lib/images/pizza/prosciutto.jpg",
         price: 13.49,
         category: FoodCategory.pizza,
         availableAddons: [

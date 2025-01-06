@@ -42,22 +42,25 @@ class FoodTile extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                const SizedBox(width: 15,),
-
+                const SizedBox(
+                  width: 15,
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
                     food.imagePath,
                     height: 120,
                     width: 120,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.error); 
+                    },
                   ),
                 ),
               ],
             ),
           ),
         ),
-
         Divider(
           indent: 25,
           endIndent: 25,
