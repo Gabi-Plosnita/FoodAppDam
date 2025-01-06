@@ -23,7 +23,8 @@ class CartPage extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("Are you sure you want to clear your cart?"),
+                      title: const Text(
+                          "Are you sure you want to clear your cart?"),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
@@ -46,15 +47,21 @@ class CartPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: userCart.length,
-                  itemBuilder: (context, index) {
-                    final cartItem = userCart[index];
-                    return MyCartTile(cartItem: cartItem);
-                  },
-                ),
-              ),
+              userCart.isEmpty
+                  ? const Expanded(
+                      child: Center(
+                        child: Text("Cart is empty.."),
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: userCart.length,
+                        itemBuilder: (context, index) {
+                          final cartItem = userCart[index];
+                          return MyCartTile(cartItem: cartItem);
+                        },
+                      ),
+                    ),
             ],
           ),
         );
