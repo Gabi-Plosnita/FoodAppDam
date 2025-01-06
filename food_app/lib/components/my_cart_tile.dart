@@ -12,38 +12,47 @@ class MyCartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Restaurant>(
       builder: (context, restaurant, child) => Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         child: Column(
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    cartItem.food.imagePath,
-                    height: 100,
-                    width: 100,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      cartItem.food.imagePath,
+                      height: 100,
+                      width: 100,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(cartItem.food.name),
-                    Text("\$" + cartItem.food.price.toString()),
-                  ],
-                ),
-                QuantitySelector(
-                  quantity: cartItem.quantity,
-                  food: cartItem.food,
-                  onIncrement: () {
-                    restaurant.addToCart(
-                        cartItem.food, cartItem.selectedAddons);
-                  },
-                  onDecrement: () {
-                    restaurant.removeFromCart(cartItem);
-                  },
-                )
-              ],
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(cartItem.food.name),
+                      Text("\$${cartItem.food.price}"),
+                    ],
+                  ),
+                  const Spacer(),
+                  QuantitySelector(
+                    quantity: cartItem.quantity,
+                    food: cartItem.food,
+                    onIncrement: () {
+                      restaurant.addToCart(
+                          cartItem.food, cartItem.selectedAddons);
+                    },
+                    onDecrement: () {
+                      restaurant.removeFromCart(cartItem);
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
