@@ -12,7 +12,6 @@ class DeliveryProgressPage extends StatefulWidget {
 }
 
 class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
-  
   FirestoreService db = FirestoreService();
 
   @override
@@ -22,7 +21,7 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
     String receipt = context.read<Restaurant>().displayCartReceipt();
     db.saveOrderToDatabase(receipt);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +29,12 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         backgroundColor: Colors.transparent,
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
-      body: Column(
-        children: [
-          MyReceipt(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            MyReceipt(),
+          ],
+        ),
       ),
     );
   }
