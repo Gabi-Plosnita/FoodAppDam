@@ -38,6 +38,7 @@ dependencies:
   collection: ^1.19.0
   flutter_credit_card: ^4.0.1
   intl: ^0.20.1
+  firebase_core: ^3.9.0
 
 dev_dependencies:
   flutter_test:
