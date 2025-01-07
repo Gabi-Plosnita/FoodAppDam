@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
 class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
+  MyCurrentLocation({super.key});
 
-  void openLocationSearchBox(BuildContext context)
-  {
+  final TextEditingController textController = TextEditingController();
+
+  void openLocationSearchBox(BuildContext context) {
     showDialog(
-      context: context, 
+      context: context,
       builder: (context) => AlertDialog(
         title: const Text("Your location"),
-        content: const TextField(
-          decoration: InputDecoration(hintText: "Search adress.."),
+        content: TextField(
+          controller: textController, 
+          decoration: const InputDecoration(hintText: "Enter address..."),
         ),
         actions: [
           MaterialButton(
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"),
           ),
-
           MaterialButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              String newAddress = textController.text;
+              if (newAddress.isNotEmpty) {
+                context.read<Restaurant>().updateDeliveryAdress(newAddress);
+                Navigator.pop(context);
+                textController.clear();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Address cannot be empty')),
+                );
+              }
+            },
             child: const Text("Save"),
           ),
         ],
-      )
+      ),
     );
   }
 
@@ -42,13 +56,26 @@ class MyCurrentLocation extends StatelessWidget {
             ),
           ),
           GestureDetector(
-              onTap: () => openLocationSearchBox(context),
-              child: Row(
-                children: [
-                  Text("Romania Brasov 13 decembrie nr 24"),
-                  Icon(Icons.keyboard_arrow_down_rounded),
-                ],
-              )
+            onTap: () => openLocationSearchBox(context),
+            child: Row(
+              children: [
+                Consumer<Restaurant>(
+                  builder: (context, restaurant, child) {
+                    return Text(
+                      restaurant.deliveryAdress,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ],
+            ),
           )
         ],
       ),

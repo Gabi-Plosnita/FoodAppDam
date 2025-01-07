@@ -137,10 +137,13 @@ class Restaurant extends ChangeNotifier {
         ]),
   ];
 
+  final List<CartItem> _cart = [];
+
+  String _deliveryAdress = 'Brasov, Carpatilor, nr25';
+
   List<Food> get menu => _menu;
   List<CartItem> get cart => _cart;
-
-  final List<CartItem> _cart = [];
+  String get deliveryAdress => _deliveryAdress;
 
   void addToCart(Food food, List<Addon> selectedAddons) {
     CartItem? cartItem = _cart.firstWhereOrNull((item) {
@@ -243,5 +246,10 @@ class Restaurant extends ChangeNotifier {
   String _formatAddons(List<Addon> addons){
     return addons.map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
                  .join(", ");
+  }
+
+  void updateDeliveryAdress(String adress){
+    _deliveryAdress = adress;
+    notifyListeners();
   }
 }
