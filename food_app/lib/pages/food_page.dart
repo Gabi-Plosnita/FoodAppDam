@@ -22,18 +22,27 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-
+  // Method to add to cart and show a Snackbar (for Windows and all platforms)
   void addToCart(Food food, Map<Addon, bool> selectedAddons) {
     Navigator.pop(context);
 
     List<Addon> currentlySelectedAddons = [];
-    for(Addon addon in widget.food.availableAddons){
-      if(widget.selectedAddons[addon] == true){
+    for (Addon addon in widget.food.availableAddons) {
+      if (widget.selectedAddons[addon] == true) {
         currentlySelectedAddons.add(addon);
       }
     }
 
     context.read<Restaurant>().addToCart(food, currentlySelectedAddons);
+
+    // Show a Snackbar (works on Windows and all platforms)
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Added ${food.name} to cart"),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.black,
+      ),
+    );
   }
 
   @override
@@ -129,16 +138,16 @@ class _FoodPageState extends State<FoodPage> {
           child: Opacity(
             opacity: 0.6,
             child: Container(
-            margin: EdgeInsets.only(left: 25),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              shape: BoxShape.circle,
+              margin: EdgeInsets.only(left: 25),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
           ),
         ),
       ],
